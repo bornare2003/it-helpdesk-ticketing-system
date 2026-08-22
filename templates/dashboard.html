@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block title %}Admin Dashboard - IT Helpdesk{% endblock %}
+{% block content %}
+<div class="dash-header">
+  <h1>Admin Dashboard</h1>
+  <p class="muted">Signed in as {{ admin_username }}</p>
+</div>
+
+<div class="stats-grid" id="stats-grid">
+  <div class="stat-card"><span class="stat-value" id="stat-total">-</span><span class="stat-label">Total Tickets</span></div>
+  <div class="stat-card"><span class="stat-value" id="stat-open">-</span><span class="stat-label">Open</span></div>
+  <div class="stat-card"><span class="stat-value" id="stat-progress">-</span><span class="stat-label">In Progress</span></div>
+  <div class="stat-card"><span class="stat-value" id="stat-resolved">-</span><span class="stat-label">Resolved</span></div>
+</div>
+
+<div class="card filters-card">
+  <div class="filters">
+    <input type="text" id="filter-search" placeholder="Search title, description, requester...">
+    <select id="filter-category">
+      <option value="All">All Categories</option>
+      {% for c in categories %}<option value="{{ c }}">{{ c }}</option>{% endfor %}
+    </select>
+    <select id="filter-priority">
+      <option value="All">All Priorities</option>
+      {% for p in priorities %}<option value="{{ p }}">{{ p }}</option>{% endfor %}
+    </select>
+    <select id="filter-status">
+      <option value="All">All Statuses</option>
+      {% for s in statuses %}<option value="{{ s }}">{{ s }}</option>{% endfor %}
+    </select>
+    <select id="filter-sort">
+      <option value="created_desc">Newest first</option>
+      <option value="created_asc">Oldest first</option>
+      <option value="priority">Priority</option>
+      <option value="status">Status</option>
+    </select>
+  </div>
+</div>
+
+<div class="card table-card">
+  <div class="table-wrap">
+    <table id="tickets-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Title</th>
+          <th>Requester</th>
+          <th>Category</th>
+          <th>Priority</th>
+          <th>Status</th>
+          <th>Created</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="tickets-tbody">
+        <tr><td colspan="8" class="loading-row">Loading tickets...</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="pagination" id="pagination"></div>
+</div>
+
+<div class="modal hidden" id="ticket-modal">
+  <div class="modal-content">
+    <button class="modal-close" id="modal-close">&times;</button>
+    <div id="modal-body"></div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+  const STATUSES = {{ statuses|tojson }};
+  const CATEGORIES = {{ categories|tojson }};
+  const PRIORITIES = {{ priorities|tojson }};
+</script>
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+{% endblock %}

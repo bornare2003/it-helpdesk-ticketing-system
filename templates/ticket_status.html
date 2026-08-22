@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Ticket #{{ ticket.id }} - IT Helpdesk{% endblock %}
+{% block content %}
+<div class="card">
+  <div class="ticket-header">
+    <h1>Ticket #{{ ticket.id }}</h1>
+    <span class="badge status-{{ ticket.status|replace(' ', '-')|lower }}">{{ ticket.status }}</span>
+  </div>
+  <h2>{{ ticket.title }}</h2>
+  <p class="ticket-desc">{{ ticket.description }}</p>
+  <div class="ticket-meta">
+    <span class="badge category-badge">{{ ticket.category }}</span>
+    <span class="badge priority-{{ ticket.priority|lower }}">{{ ticket.priority }} priority</span>
+  </div>
+  <hr>
+  <p><strong>Requested by:</strong> {{ ticket.requester_name }} ({{ ticket.requester_email }})</p>
+  <p><strong>Created:</strong> {{ ticket.created_at.strftime('%Y-%m-%d %H:%M UTC') }}</p>
+  <p><strong>Last updated:</strong> {{ ticket.updated_at.strftime('%Y-%m-%d %H:%M UTC') }}</p>
+  <a class="btn btn-secondary" href="{{ url_for('views.index') }}">Submit another ticket</a>
+</div>
+{% endblock %}

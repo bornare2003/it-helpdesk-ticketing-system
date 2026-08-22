@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Admin Login - IT Helpdesk{% endblock %}
+{% block content %}
+<div class="card form-card narrow">
+  <h1>Admin Login</h1>
+  <form method="POST">
+    <div class="form-row">
+      <label for="username">Username</label>
+      <input type="text" id="username" name="username" required autofocus>
+    </div>
+    <div class="form-row">
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Log In</button>
+  </form>
+  <p class="hint">Default demo credentials: <code>admin / admin123</code></p>
+</div>
+{% endblock %}

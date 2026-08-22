@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{% block title %}IT Helpdesk{% endblock %}</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+{% block head %}{% endblock %}
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="{{ url_for('views.index') }}">🎫 IT Helpdesk</a>
+    <nav class="nav">
+      <a href="{{ url_for('views.index') }}">Submit Ticket</a>
+      {% if session.get('is_admin') %}
+        <a href="{{ url_for('views.admin_dashboard') }}">Dashboard</a>
+        <a href="{{ url_for('views.admin_logout') }}">Logout</a>
+      {% else %}
+        <a href="{{ url_for('views.admin_login') }}">Admin Login</a>
+      {% endif %}
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <div class="flash-container">
+        {% for category, message in messages %}
+          <div class="flash flash-{{ category }}">{{ message }}</div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+  {% block content %}{% endblock %}
+</main>
+
+<footer class="footer">
+  <p>IT Helpdesk Ticketing System &mdash; Flask · SQLite · REST API · Docker</p>
+</footer>
+{% block scripts %}{% endblock %}
+</body>
+</html>

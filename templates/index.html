@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block title %}Submit a Ticket - IT Helpdesk{% endblock %}
+{% block content %}
+<div class="hero">
+  <h1>Need IT support?</h1>
+  <p>Submit a ticket below and our team will get back to you.</p>
+</div>
+
+<div class="card form-card">
+  <form id="ticket-form" novalidate>
+    <div id="form-alert" class="alert hidden"></div>
+
+    <div class="form-row">
+      <label for="requester_name">Your Name</label>
+      <input type="text" id="requester_name" name="requester_name" required maxlength="100" placeholder="Jane Doe">
+    </div>
+
+    <div class="form-row">
+      <label for="requester_email">Your Email</label>
+      <input type="email" id="requester_email" name="requester_email" required maxlength="150" placeholder="jane@company.com">
+    </div>
+
+    <div class="form-row">
+      <label for="title">Subject</label>
+      <input type="text" id="title" name="title" required maxlength="150" placeholder="Laptop won't turn on">
+    </div>
+
+    <div class="form-row two-col">
+      <div>
+        <label for="category">Category</label>
+        <select id="category" name="category" required>
+          <option value="" disabled selected>Select category</option>
+          {% for c in categories %}<option value="{{ c }}">{{ c }}</option>{% endfor %}
+        </select>
+      </div>
+      <div>
+        <label for="priority">Priority</label>
+        <select id="priority" name="priority" required>
+          <option value="" disabled selected>Select priority</option>
+          {% for p in priorities %}<option value="{{ p }}">{{ p }}</option>{% endfor %}
+        </select>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <label for="description">Describe the issue</label>
+      <textarea id="description" name="description" rows="5" required placeholder="What happened? What have you already tried?"></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-primary" id="submit-btn">Submit Ticket</button>
+  </form>
+</div>
+
+<div id="success-card" class="card success-card hidden">
+  <h2>✅ Ticket submitted!</h2>
+  <p>Your ticket ID is <strong id="ticket-id"></strong>. Save this to check your ticket status.</p>
+  <a id="ticket-link" class="btn btn-secondary" href="#">View Ticket Status</a>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+{% endblock %}

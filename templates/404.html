@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}Not Found{% endblock %}
+{% block content %}
+<div class="card empty-state">
+  <h1>404</h1>
+  <p>The page you're looking for doesn't exist.</p>
+  <a class="btn btn-primary" href="{{ url_for('views.index') }}">Go home</a>
+</div>
+{% endblock %}
